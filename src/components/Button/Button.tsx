@@ -14,10 +14,10 @@ export function Button({
   return (
     <button
       className={clsx(
-        'text-fgpx-8 py-3 rounded-md transition-colors',
+        'text-fg px-8 py-3 rounded-md transition-colors',
         {
           'bg-bg hover:bg-bg_h': variant === 'contained',
-          'border border-fg hover:bg-bg2': variant === 'outlined',
+          'border border-fg4 hover:bg-fg4/40': variant === 'outlined',
         },
         className
       )}
