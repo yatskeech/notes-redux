@@ -1,8 +1,6 @@
-import { Link, useFetcher } from 'react-router';
+import { Link } from 'react-router';
 import { Button, Input } from '../components/ui';
 import { useRegister } from '../hooks';
-import { useEffect } from 'react';
-import { RegisterActionData } from '../utils/actions';
 
 export interface RegisterForm {
   username: string;
@@ -12,27 +10,8 @@ export interface RegisterForm {
 }
 
 export function RegisterPage() {
-  const {
-    values,
-    inputErrors,
-    setInputErrors,
-    totalError,
-    setTotalError,
-    handleInput,
-  } = useRegister();
-
-  const fetcher = useFetcher<RegisterActionData>();
-  const fetcherErrors = fetcher.data;
-
-  useEffect(() => {
-    if (fetcherErrors?.inputErrors) {
-      setInputErrors(fetcherErrors.inputErrors);
-    }
-
-    if (fetcherErrors?.totalError) {
-      setTotalError(fetcherErrors.totalError);
-    }
-  }, [fetcherErrors, setInputErrors, setTotalError]);
+  const { fetcher, values, inputErrors, totalError, handleInput } =
+    useRegister();
 
   return (
     <div className="flex flex-col items-center gap-4 text-fg p-8">

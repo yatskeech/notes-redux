@@ -1,10 +1,12 @@
-import { ActionFunction, data, redirect } from 'react-router';
+import { ActionFunction, data } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmail, validateLoginForm, validateRegisterForm } from './validation';
 import { findUsersBy, register } from './api';
 import { RegisterForm, LoginForm } from '../pages';
+import { User } from '../types';
 
 export interface ActionData<T extends object> {
+  user?: User;
   totalError?: string;
   inputErrors?: Partial<T>;
 }
@@ -50,7 +52,7 @@ export const loginAction: ActionFunction = async ({ request }) => {
       );
     }
 
-    return redirect('/');
+    return data<LoginActionData>({ user: users[0] }, { status: 200 });
   } catch {
     return data<LoginActionData>(
       { totalError: 'Failed to connect to server' },
@@ -74,19 +76,20 @@ export const registerAction: ActionFunction = async ({ request }) => {
     return data<RegisterActionData>({ inputErrors: errors }, { status: 400 });
   }
 
-  try {
-    await register({
-      id: uuidv4(),
-      username: form.username as string,
-      email: form.email as string,
-      password: form.password as string,
-      createdAt: Date.now(),
-    });
+  const user: User = {
+    id: uuidv4(),
+    username: form.username as string,
+    email: form.email as string,
+    password: form.password as string,
+    createdAt: Date.now(),
+  };
 
-    return redirect('/');
+  try {
+    await register(user);
+    return data<RegisterActionData>({ user: user }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
-      return data<LoginActionData>(
+      return data<RegisterActionData>(
         { totalError: 'Failed to connect to server' },
         { status: 400 }
       );

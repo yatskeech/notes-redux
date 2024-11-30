@@ -1,8 +1,6 @@
 import { Button, Input } from '../components/ui';
-import { Link, useFetcher } from 'react-router';
-import { LoginActionData } from '../utils/actions';
+import { Link } from 'react-router';
 import { useLogin } from '../hooks';
-import { useEffect } from 'react';
 
 export interface LoginForm {
   usernameOrEmail: string;
@@ -10,27 +8,7 @@ export interface LoginForm {
 }
 
 export function LoginPage() {
-  const {
-    values,
-    inputErrors,
-    setInputErrors,
-    totalError,
-    setTotalError,
-    handleInput,
-  } = useLogin();
-
-  const fetcher = useFetcher<LoginActionData>();
-  const fetcherErrors = fetcher.data;
-
-  useEffect(() => {
-    if (fetcherErrors?.inputErrors) {
-      setInputErrors(fetcherErrors.inputErrors);
-    }
-
-    if (fetcherErrors?.totalError) {
-      setTotalError(fetcherErrors.totalError);
-    }
-  }, [fetcherErrors, setInputErrors, setTotalError]);
+  const { fetcher, values, inputErrors, totalError, handleInput } = useLogin();
 
   return (
     <div className="flex flex-col items-center gap-4 text-fg p-8">
