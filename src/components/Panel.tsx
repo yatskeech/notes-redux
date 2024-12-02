@@ -1,4 +1,3 @@
-import { Button } from './ui';
 import { PlusIcon } from './icons';
 import { Profile } from './Profile';
 import { ReactNode } from 'react';
