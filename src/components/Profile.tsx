@@ -1,8 +1,9 @@
 import { Avatar } from './ui';
-import { Link, useNavigate } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { useContext } from 'react';
 import { UserContext } from '../contexts';
 import { User } from '../types';
+import clsx from 'clsx';
 
 export function Profile() {
   const navigate = useNavigate();
@@ -16,9 +17,16 @@ export function Profile() {
   };
 
   return (
-    <Link
+    <NavLink
       to="/profile"
-      className="flex gap-2 items-center px-8 py-4 transition-colors hover:bg-bg2"
+      className={({ isActive }) =>
+        clsx(
+          'flex gap-2 items-center px-8 py-4 transition-colors hover:bg-bg2',
+          {
+            'bg-bg2 ': isActive,
+          }
+        )
+      }
     >
       <Avatar user={user} variant={'small'} />
       <div className="flex flex-col">
@@ -31,6 +39,6 @@ export function Profile() {
       >
         Log out
       </button>
-    </Link>
+    </NavLink>
   );
 }

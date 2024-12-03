@@ -24,7 +24,7 @@ export function ProfilePage() {
           <span className="text-fg4 text-sm">{user.email}</span>
           <button
             onClick={logout}
-            className="mt-4 px-8 py-1 border border-red rounded-full text-red text-xs hover:bg-red/40 hover:text-fg transition-colors"
+            className="mt-4 px-8 py-1 border border-red rounded-full text-red text-xs hover:bg-red hover:text-fg transition-colors"
           >
             Log out
           </button>

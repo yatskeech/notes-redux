@@ -7,6 +7,18 @@ const URL_API = 'http://localhost:3000';
 type UserParams = { [key in keyof User]?: string };
 type NoteParams = { [key in keyof Note]?: string };
 
+export async function deleteNote(note: Note) {
+  const response = await fetch(`${URL_API}/notes/${note.id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    return;
+  }
+
+  return response.json();
+}
+
 export async function putNote(note: Note) {
   const response = await fetch(`${URL_API}/notes/${note.id}`, {
     method: 'PUT',

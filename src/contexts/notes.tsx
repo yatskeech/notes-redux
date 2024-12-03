@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { Note } from '../types';
 import { UserContext } from './user';
-import { findNotesBy, postNote, putNote } from '../utils/api';
+import { deleteNote, findNotesBy, postNote, putNote } from '../utils/api';
 import { debounce } from '../utils/debounce';
 
 interface NotesContextData {
@@ -16,6 +16,7 @@ interface NotesContextData {
   loading: boolean;
   addNote: (note: Note) => void;
   setNote: (note: Note) => void;
+  removeNote: (note: Note) => void;
 }
 
 export const NotesContext = createContext<NotesContextData | null>(null);
@@ -46,8 +47,15 @@ export function NotesContextProvider({ children }: { children: ReactNode }) {
     debouncedPutNote(note);
   };
 
+  const removeNote = (note: Note) => {
+    setNotes((notes) => notes.filter((n) => n.id != note.id));
+    deleteNote(note);
+  };
+
   return (
-    <NotesContext.Provider value={{ notes, loading, addNote, setNote }}>
+    <NotesContext.Provider
+      value={{ notes, loading, addNote, setNote, removeNote }}
+    >
       {children}
     </NotesContext.Provider>
   );

@@ -1,26 +1,4 @@
 {
-  "users": [
-    {
-      "id": "8372fe54-7d8b-45a3-8cbf-01f4c9640a39",
-      "username": "yatskeech",
-      "email": "dima.ja06@gmail.com",
-      "password": "a1s1d1f1A",
-      "createdAt": 1732892097860
-    },
-    {
-      "id": "bd2d4918-e4bb-421b-a646-90d5203a4dc1",
-      "username": "admin",
-      "email": "a@gmail.com",
-      "password": "a1s1d1f1A",
-      "createdAt": 1732893709370
-    },
-    {
-      "id": "ae701378-e59c-4996-bc62-be85246f0ae1",
-      "username": "admin2",
-      "email": "a@mail.ru",
-      "password": "a1s1d1f1A",
-      "createdAt": 1732975301613
-    }
-  ],
+  "users": [],
   "notes": []
 }

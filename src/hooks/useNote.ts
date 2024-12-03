@@ -10,8 +10,7 @@ export function useNote() {
   const note = notesContext?.notes.find((n) => n.id == id);
 
   if (!note) {
-    navigate('/', { replace: true });
-    return { note: null, handleTitle: null, handleContent: null };
+    return {};
   }
 
   const handleTitle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -30,5 +29,10 @@ export function useNote() {
     });
   };
 
-  return { note, handleTitle, handleContent };
+  const handleDelete = () => {
+    notesContext?.removeNote(note);
+    navigate('/', { replace: true });
+  };
+
+  return { note, handleTitle, handleContent, handleDelete };
 }
