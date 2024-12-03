@@ -12,7 +12,9 @@ export function CreateNotePage() {
         placeholder="Title"
         className="w-full text-4xl overflow-hidden font-bold bg-transparent outline-none leading-none placeholder:text-fg4"
       />
-      <span className="text-sm text-fg2 py-2">{createdAt}</span>
+      <span className="text-sm text-fg2 py-2">
+        {new Date(createdAt).toLocaleString()}
+      </span>
       <textarea
         value={content}
         onChange={handleContent}

@@ -25,7 +25,9 @@ export function NoteItem({ note }: NoteItemProps) {
       <p className="text-sm text-fg4 leading-tight">
         {slice(note.content, 30) || 'No addition text'}
       </p>
-      <span className="text-xs text-fg2">{note.createdAt}</span>
+      <span className="text-xs text-fg2">
+        {new Date(note.createdAt).toLocaleString()}
+      </span>
     </NavLink>
   );
 }
