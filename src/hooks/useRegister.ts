@@ -41,7 +41,7 @@ export function useRegister() {
 
     if (fetcherData?.user) {
       context?.setUser(fetcherData.user);
-      navigate('/profile', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [context, fetcherData, navigate, setInputErrors, setTotalError]);
 
