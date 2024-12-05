@@ -19,6 +19,7 @@ export function PanelLayout() {
         <Panel>
           <LoadingIcon className="my-auto self-center w-16 h-16" />
         </Panel>
+        <Outlet />
       </div>
     );
   }
@@ -32,6 +33,7 @@ export function PanelLayout() {
             You don't have any notes
           </div>
         </Panel>
+        <Outlet />
       </div>
     );
   }
