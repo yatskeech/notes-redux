@@ -16,8 +16,8 @@ export function ProfilePage() {
   };
 
   return (
-    <div className="p-8 flex-grow">
-      <div className="flex flex-col items-center gap-4 mt-40">
+    <div className="p-8 flex-grow flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
         <Avatar user={user} variant={'large'} />
         <div className="flex flex-col items-center">
           <h2 className="text-fg text-4xl font-bold">{user.username}</h2>
