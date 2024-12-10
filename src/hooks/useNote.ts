@@ -1,36 +1,43 @@
-import { ChangeEvent, useContext } from 'react';
+import { ChangeEvent } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { NotesContext } from '../contexts';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { deleteNoteAction, setNoteAction } from '../redux/notes';
 
 export function useNote() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const notesContext = useContext(NotesContext);
-  const note = notesContext?.notes.find((n) => n.id == id);
+  const dispatch = useAppDispatch();
+
+  const { notes } = useAppSelector((state) => state.notes);
+  const note = notes.find((n) => n.id == id);
 
   if (!note) {
     return {};
   }
 
   const handleTitle = (event: ChangeEvent<HTMLInputElement>) => {
-    notesContext?.setNote({
-      ...note,
-      title: event.target.value,
-      createdAt: Date.now(),
-    });
+    dispatch(
+      setNoteAction({
+        ...note,
+        title: event.target.value,
+        createdAt: Date.now(),
+      })
+    );
   };
 
   const handleContent = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    notesContext?.setNote({
-      ...note,
-      content: event.target.value,
-      createdAt: Date.now(),
-    });
+    dispatch(
+      setNoteAction({
+        ...note,
+        content: event.target.value,
+        createdAt: Date.now(),
+      })
+    );
   };
 
   const handleDelete = () => {
-    notesContext?.removeNote(note);
+    dispatch(deleteNoteAction(note));
     navigate('/', { replace: true });
   };
 

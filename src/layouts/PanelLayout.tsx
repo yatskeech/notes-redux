@@ -1,17 +1,20 @@
 import { Outlet } from 'react-router';
 import { NoteItem, Panel } from '../components';
 import { InfoIcon, LoadingIcon } from '../components/icons';
-import { useContext } from 'react';
-import { NotesContext } from '../contexts/notes';
 import { Note } from '../types';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { useEffect } from 'react';
+import { fetchNotesAction } from '../redux/notes';
 
 export function PanelLayout() {
-  const context = useContext(NotesContext);
+  const dispatch = useAppDispatch();
 
-  const notes = context!.notes;
-  const loading = context!.loading;
-
+  const { notes, loading } = useAppSelector((state) => state.notes);
   const sort = (a: Note, b: Note) => b.createdAt - a.createdAt;
+
+  const { user } = useAppSelector((state) => state.user);
+
+  useEffect(() => dispatch(fetchNotesAction(user!)), []);
 
   if (loading) {
     return (

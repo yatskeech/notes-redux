@@ -1,18 +1,17 @@
 import { Avatar } from './ui';
 import { NavLink, useNavigate } from 'react-router';
-import { useContext } from 'react';
-import { UserContext } from '../contexts';
-import { User } from '../types';
 import clsx from 'clsx';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { setUserAction } from '../redux/user';
 
 export function Profile() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const context = useContext(UserContext);
-  const user = context?.user as User;
+  const { user } = useAppSelector((state) => state.user);
 
   const logOut = () => {
-    context?.setUser(null);
+    dispatch(setUserAction(null));
     navigate('/login', { replace: true });
   };
 
@@ -28,10 +27,10 @@ export function Profile() {
         )
       }
     >
-      <Avatar user={user} variant={'small'} />
+      <Avatar user={user!} variant={'small'} />
       <div className="flex flex-col">
-        <h3 className="text-fg text-sm font-bold">{user.username}</h3>
-        <h4 className="text-fg4 text-xs">{user.email}</h4>
+        <h3 className="text-fg text-sm font-bold">{user!.username}</h3>
+        <h4 className="text-fg4 text-xs">{user!.email}</h4>
       </div>
       <button
         onClick={logOut}

@@ -1,8 +1,9 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { LoginForm } from '../pages';
 import { LoginActionData } from '../utils/actions';
 import { useFetcher, useNavigate } from 'react-router';
-import { UserContext } from '../contexts';
+import { useAppDispatch } from '../redux/store';
+import { setUserAction } from '../redux/user';
 
 export function useLogin() {
   const [values, setValues] = useState<LoginForm>({
@@ -21,7 +22,7 @@ export function useLogin() {
     };
   };
 
-  const context = useContext(UserContext);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const fetcher = useFetcher<LoginActionData>();
@@ -37,10 +38,10 @@ export function useLogin() {
     }
 
     if (fetcherData?.user) {
-      context?.setUser(fetcherData.user);
+      dispatch(setUserAction(fetcherData.user));
       navigate('/', { replace: true });
     }
-  }, [context, fetcherData, navigate, setInputErrors, setTotalError]);
+  }, [fetcherData, navigate, setInputErrors, setTotalError]);
 
   return {
     fetcher,

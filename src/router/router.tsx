@@ -9,7 +9,6 @@ import {
 } from '../pages';
 import { loginAction, registerAction } from '../utils/actions';
 import { RequireAuth } from '../utils/RequireAuth';
-import { NotesContextProvider } from '../contexts';
 
 export const router = createBrowserRouter([
   {
@@ -19,9 +18,7 @@ export const router = createBrowserRouter([
       {
         element: (
           <RequireAuth>
-            <NotesContextProvider>
-              <PanelLayout />
-            </NotesContextProvider>
+            <PanelLayout />
           </RequireAuth>
         ),
         children: [

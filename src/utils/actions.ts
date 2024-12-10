@@ -32,7 +32,7 @@ export const loginAction: ActionFunction = async ({ request }) => {
     : { username: form.usernameOrEmail };
 
   try {
-    const users = await findUsersBy(params);
+    const users = await findUsersBy(params);    
 
     if (!users.length) {
       return data<LoginActionData>(

@@ -1,17 +1,17 @@
-import { ChangeEvent, useCallback, useContext, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { NotesContext, UserContext } from '../contexts';
 import { debounce } from '../utils/debounce';
 import { Note } from '../types';
 import { v4 as uuidv4 } from 'uuid';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { addNoteAction } from '../redux/notes';
 
 export function useCreateNote() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const userContext = useContext(UserContext);
-  const notesContext = useContext(NotesContext);
-
-  const userId = userContext?.user?.id as string;
+  const { user } = useAppSelector((state) => state.user);
+  const userId = user!.id;
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -19,7 +19,7 @@ export function useCreateNote() {
 
   const createNote = useCallback(
     debounce((note: Note) => {
-      notesContext?.addNote(note);
+      dispatch(addNoteAction(note));
       navigate(`/${note.id}`, { replace: true });
     }, 1000),
     []

@@ -1,8 +1,9 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { RegisterForm } from '../pages';
 import { RegisterActionData } from '../utils/actions';
-import { UserContext } from '../contexts';
 import { useFetcher, useNavigate } from 'react-router';
+import { useAppDispatch } from '../redux/store';
+import { setUserAction } from '../redux/user';
 
 export function useRegister() {
   const [values, setValues] = useState<RegisterForm>({
@@ -24,7 +25,7 @@ export function useRegister() {
     };
   };
 
-  const context = useContext(UserContext);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const fetcher = useFetcher<RegisterActionData>();
@@ -40,10 +41,10 @@ export function useRegister() {
     }
 
     if (fetcherData?.user) {
-      context?.setUser(fetcherData.user);
+      dispatch(setUserAction(fetcherData.user));
       navigate('/', { replace: true });
     }
-  }, [context, fetcherData, navigate, setInputErrors, setTotalError]);
+  }, [fetcherData, navigate, setInputErrors, setTotalError]);
 
   return {
     fetcher,

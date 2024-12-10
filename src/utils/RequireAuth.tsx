@@ -1,16 +1,16 @@
-import { ReactNode, useContext } from 'react';
-import { UserContext } from '../contexts';
+import { ReactNode } from 'react';
 import { Navigate } from 'react-router';
 import { LoadingIcon } from '../components/icons';
+import { useAppSelector } from '../redux/store';
 
 interface RequireAuthProps {
   children: ReactNode;
 }
 
 export function RequireAuth({ children }: RequireAuthProps) {
-  const context = useContext(UserContext);
+  const { user, loading } = useAppSelector((state) => state.user);
 
-  if (context?.loading) {
+  if (loading) {
     return (
       <div className="flex-grow flex items-center justify-center">
         <LoadingIcon className="w-16 h-16" />
@@ -18,7 +18,7 @@ export function RequireAuth({ children }: RequireAuthProps) {
     );
   }
 
-  if (!context?.user) {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 
