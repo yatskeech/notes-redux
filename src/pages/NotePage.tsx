@@ -1,9 +1,19 @@
 import { Navigate } from 'react-router';
-import { TrashIcon } from '../components/icons';
+import { LoadingIcon, TrashIcon } from '../components/icons';
 import { useNote } from '../hooks/useNote';
 
 export function NotePage() {
-  const { note, handleTitle, handleContent, handleDelete } = useNote();
+  const { note, loading, handleTitle, handleContent, handleDelete } = useNote();
+  console.log(loading);
+  
+
+  if (loading) {
+    return (
+      <div className="flex-grow flex items-center justify-center">
+        <LoadingIcon className="w-16 h-16" />
+      </div>
+    );
+  }
 
   if (!note) {
     return <Navigate to="/" replace={true} />;

@@ -1,16 +1,16 @@
 import { Avatar } from '../components/ui';
 import { useNavigate } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../redux/store';
-import { setUserAction } from '../redux/user';
+import { userConnector } from '../redux/user';
+import { ConnectedProps } from 'react-redux';
 
-export function ProfilePage() {
-  const dispatch = useAppDispatch();
+function ProfilePageComponent({
+  user,
+  setUserAction,
+}: ConnectedProps<typeof userConnector>) {
   const navigate = useNavigate();
 
-  const { user } = useAppSelector((state) => state.user);
-
   const logout = () => {
-    dispatch(setUserAction(null));
+    setUserAction(null);
     navigate('/login', { replace: true });
   };
 
@@ -32,3 +32,5 @@ export function ProfilePage() {
     </div>
   );
 }
+
+export const ProfilePage = userConnector(ProfilePageComponent);

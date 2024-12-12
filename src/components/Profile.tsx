@@ -1,17 +1,17 @@
 import { Avatar } from './ui';
 import { NavLink, useNavigate } from 'react-router';
 import clsx from 'clsx';
-import { useAppDispatch, useAppSelector } from '../redux/store';
-import { setUserAction } from '../redux/user';
+import { userConnector } from '../redux/user';
+import { ConnectedProps } from 'react-redux';
 
-export function Profile() {
-  const dispatch = useAppDispatch();
+function ProfileComponent({
+  user,
+  setUserAction,
+}: ConnectedProps<typeof userConnector>) {
   const navigate = useNavigate();
 
-  const { user } = useAppSelector((state) => state.user);
-
   const logOut = () => {
-    dispatch(setUserAction(null));
+    setUserAction(null);
     navigate('/login', { replace: true });
   };
 
@@ -41,3 +41,5 @@ export function Profile() {
     </NavLink>
   );
 }
+
+export const Profile = userConnector(ProfileComponent);

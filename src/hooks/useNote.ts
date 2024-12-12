@@ -9,11 +9,11 @@ export function useNote() {
 
   const dispatch = useAppDispatch();
 
-  const { notes } = useAppSelector((state) => state.notes);
+  const { notes, loading } = useAppSelector((state) => state.notes);
   const note = notes.find((n) => n.id == id);
 
   if (!note) {
-    return {};
+    return { loading };
   }
 
   const handleTitle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -41,5 +41,5 @@ export function useNote() {
     navigate('/', { replace: true });
   };
 
-  return { note, handleTitle, handleContent, handleDelete };
+  return { note, loading, handleTitle, handleContent, handleDelete };
 }

@@ -8,13 +8,11 @@ interface NotesStore {
 
 const DEFAULT_STATE: NotesStore = {
   notes: [],
-  loading: false,
+  loading: true,
 };
 
 export function notesReducer(state = DEFAULT_STATE, action: NotesAction) {
   switch (action.type) {
-    case NOTES_ACTIONS.LOADING:
-      return { ...state, loading: true };
     case NOTES_ACTIONS.NOT_LOADING:
       return { ...state, loading: false };
     case NOTES_ACTIONS.FETCH:

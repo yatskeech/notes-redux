@@ -1,19 +1,21 @@
 import { ReactNode, useEffect } from 'react';
 import { Navigate } from 'react-router';
 import { LoadingIcon } from '../components/icons';
-import { useAppDispatch, useAppSelector } from '../redux/store';
-import { fetchUserAction } from '../redux/user';
+import { userConnector } from '../redux/user';
+import { ConnectedProps } from 'react-redux';
 
-interface RequireAuthProps {
+interface RequireAuthProps extends ConnectedProps<typeof userConnector> {
   children: ReactNode;
 }
 
-export function RequireAuth({ children }: RequireAuthProps) {
-  const dispatch = useAppDispatch();
-  const { user, loading } = useAppSelector((state) => state.user);
-
+function RequireAuthComponent({
+  children,
+  user,
+  loading,
+  fetchUserAction,
+}: RequireAuthProps) {
   useEffect(() => {
-    dispatch(fetchUserAction());
+    fetchUserAction();
   }, []);
 
   if (loading) {
@@ -30,3 +32,5 @@ export function RequireAuth({ children }: RequireAuthProps) {
 
   return children;
 }
+
+export const RequireAuth = userConnector(RequireAuthComponent);
