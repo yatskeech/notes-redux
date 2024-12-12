@@ -3,19 +3,24 @@ import { getUserById } from '../../utils/api';
 import { AppDispatch } from '../store';
 
 export enum USER_ACTIONS {
-  LOADING = 'USER/LOADING',
   NOT_LOADING = 'USER/NOT_LOADING',
   SET = 'USER/SET',
 }
 
+const KEY_USER_ID = 'userId';
+
 export type UserAction =
-  | { type: USER_ACTIONS.LOADING }
   | { type: USER_ACTIONS.NOT_LOADING }
   | { type: USER_ACTIONS.SET; payload: User | null };
 
-export function fetchUserAction(userId: string) {
+export function fetchUserAction() {
   return (dispatch: AppDispatch) => {
-    dispatch({ type: USER_ACTIONS.LOADING });
+    const userId = localStorage.getItem(KEY_USER_ID);
+
+    if (!userId) {
+      dispatch({ type: USER_ACTIONS.NOT_LOADING });
+      return;
+    }
 
     getUserById(userId)
       .then((user) => dispatch({ type: USER_ACTIONS.SET, payload: user }))
@@ -25,5 +30,11 @@ export function fetchUserAction(userId: string) {
 }
 
 export function setUserAction(user: User | null) {
+  if (user) {
+    localStorage.setItem(KEY_USER_ID, user.id);
+  } else {
+    localStorage.removeItem(KEY_USER_ID);
+  }
+
   return { type: USER_ACTIONS.SET, payload: user };
 }

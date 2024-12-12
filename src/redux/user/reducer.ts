@@ -8,7 +8,7 @@ interface UserStore {
 
 const DEFAULT_STATE: UserStore = {
   user: null,
-  loading: false,
+  loading: true,
 };
 
 export function userReducer(
@@ -16,8 +16,6 @@ export function userReducer(
   action: UserAction
 ): UserStore {
   switch (action.type) {
-    case USER_ACTIONS.LOADING:
-      return { ...state, loading: true };
     case USER_ACTIONS.NOT_LOADING:
       return { ...state, loading: false };
     case USER_ACTIONS.SET:
